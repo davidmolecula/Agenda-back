@@ -1,5 +1,9 @@
 import express from 'express'
 import User from '../models/User.js'
+import UserEncrypted from '../models/UserEncrypted.js'
+import crypto from 'crypto'
+
+
 
 const controller = {
     getUsers: async(req,res) => {
@@ -44,6 +48,24 @@ const controller = {
             })
         }
         
+    },
+    encryptUsers:async(req,res)=>{
+        try{
+            console.log(req.body)
+            const userEncrypted= await UserEncrypted.create(req.body)
+            return res.status(200).json({
+                success:true,
+                message:'Usuario encriptado con exito',
+                account:userEncrypted.account,
+                password:userEncrypted.password    
+            })
+        }catch(error)
+        {
+            res.status(500).json({
+                success:false,
+                message:'No se pudo encriptar el usuario'
+            })
+        }
     }
 }
 

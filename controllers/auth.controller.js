@@ -2,6 +2,8 @@ import crypto from 'crypto'
 import User from '../models/User.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+
+
 const controller={
     signup:async(req,res,next)=>{
         try{
@@ -24,7 +26,6 @@ const controller={
                 success:false,
                 message:'No se pudo crear el usuario'
             })
-
         }
     },
     signin:async(req,res,next)=>{
