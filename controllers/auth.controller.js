@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import User from '../models/User.js'
+import Agenda from '../models/Agenda.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
@@ -96,6 +97,29 @@ const controller={
         }catch(error){
             console.log(error)
             next()
+        }
+    },
+    agenda:async(req,res,next)=>{
+        try{
+            const agenda= await Agenda.create(req.body)
+            console.log(agenda)
+            return res.status(200).json({
+                success:true,
+                message:'Agenda registrado con exito',
+                response:{
+                    agenda:{
+                        name:agenda.name,
+                        description:agenda.description,
+                        importance:agenda.importance
+                    }
+                }
+            })
+        }catch(error)
+        {
+            res.status(500).json({
+                success:false,
+                message:'No se pudo crear el usuario'
+            })
         }
     }
 }

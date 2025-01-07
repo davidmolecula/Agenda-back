@@ -11,8 +11,7 @@ const controller = {
         if(req.query.name)
         {
             queries.name=new RegExp(`${req.query.name}`,'i')
-        }
-        
+        } 
         try{
             const users=await User.find(queries)
             if(users.length>0)
