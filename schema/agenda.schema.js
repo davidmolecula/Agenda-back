@@ -12,5 +12,7 @@ export const createAgendaSchema=Joi.object({
     importance:Joi.string()
     .required()
     .min(2)
-    .max(50)
+    .max(50),   
+    date:Joi.date()
+    .required()
 })
