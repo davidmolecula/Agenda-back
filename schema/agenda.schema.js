@@ -14,5 +14,7 @@ export const createAgendaSchema=Joi.object({
     .min(2)
     .max(50),   
     date:Joi.date()
+    .required(),
+    color:Joi.string()
     .required()
 })

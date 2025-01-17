@@ -33,7 +33,6 @@ const controller = {
         }
     },
     createUsers: async(req,res)=>{
-
         try{
             const newUser=await User.create(req.body)
             return res.status(201).json({

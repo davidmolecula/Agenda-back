@@ -18,6 +18,6 @@ router.post('/signin', accountExistSignin, accountHasBeenVerified,passwordIsOk, 
 router.post('/signout', signout)
 router.post('/token',passport.authenticate('jwt',{session:false}),token)
 router.post('/agenda',validator(createAgendaSchema), agenda)
-
+router.post('/agenda/feriados',agenda)
 
 export default router

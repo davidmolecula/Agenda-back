@@ -1,4 +1,3 @@
-import express from 'express'
 import Agenda from '../models/Agenda.js'
 
 
@@ -12,7 +11,6 @@ const controller = {
         }
         try{
             const agenda=await Agenda.find(queries)
-            console.log(agenda)
             if(agenda.length>0)
             {
                 return res.status(200).json({
@@ -45,6 +43,22 @@ const controller = {
             })
         }
         
+    },
+    deleteAgenda: async(req,res)=>{
+        try{
+        // Convertir el string a un objeto Date
+            const deletedItem = await Agenda.findOneAndDelete({_id: req.body.id });
+            console.log(deletedItem)
+            return res.status(201).json({
+                success:true,
+                message:'Agenda eliminada'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al crear la agenda'
+            })
+        }
     }
 }
 
