@@ -7,7 +7,8 @@ let schema=new Schema({
     description:{type:String, required:true},
     importance:{type:String,required:true},
     date:{type:Object,required:true},
-    color:{type:String}
+    color:{type:String},
+    user:{type: Types.ObjectId,ref:'users'}
 },{
     timestamps:true
 })

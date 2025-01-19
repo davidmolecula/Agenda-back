@@ -10,7 +10,7 @@ const controller = {
             queries.name=new RegExp(`${req.query.name}`,'i')
         }
         try{
-            const agenda=await Agenda.find(queries)
+            const agenda=await Agenda.find(queries).populate('user')
             if(agenda.length>0)
             {
                 return res.status(200).json({

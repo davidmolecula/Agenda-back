@@ -17,7 +17,6 @@ router.post('/signup', accountExistSignup, validator(createUserSchema),signup)
 router.post('/signin', accountExistSignin, accountHasBeenVerified,passwordIsOk, signin)
 router.post('/signout', signout)
 router.post('/token',passport.authenticate('jwt',{session:false}),token)
-router.post('/agenda',validator(createAgendaSchema), agenda)
-router.post('/agenda/feriados',agenda)
+router.post('/agenda', validator(createAgendaSchema), agenda)
 
 export default router
