@@ -4,13 +4,10 @@ import Agenda from '../models/Agenda.js'
 
 const controller = {
     getAgenda: async(req,res) => {
-        let queries={}
-        if(req.query.name)
-        {
-            queries.name=new RegExp(`${req.query.name}`,'i')
-        }
+        const userId = req.body.id;
+        console.log('aca', userId)
         try{
-            const agenda=await Agenda.find(queries).populate('user')
+            const agenda=await Agenda.find({_id: userId })
             if(agenda.length>0)
             {
                 return res.status(200).json({

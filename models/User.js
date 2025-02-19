@@ -10,6 +10,7 @@ let schema=new Schema({
     photo:{type:String},
     online:{type:Boolean, default:true},
     verified:{type:Boolean,default:true},
+    agenda: [{ type: Types.ObjectId, ref: 'Agenda' }],
     verified_code:{type:String}
 },{
     timestamps:true

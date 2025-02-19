@@ -8,6 +8,7 @@ import  {createAgendaSchema}  from "../schema/agenda.schema.js"
 
 
 router.get('/', getAgenda)
+router.post('/', getAgenda)
 router.post('/',validator(createAgendaSchema), createAgenda)
 router.post('/delete', deleteAgenda)
 

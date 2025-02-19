@@ -153,7 +153,15 @@ const controller={
             req.body.verified_code=crypto.randomBytes(10).toString('hex')
             req.body.password=bcryptjs.hashSync(req.body.password,10)
             const user= await User.create(req.body)
-            const agenda = await Agenda.create(feriados2025);
+            const isEmpty = await Agenda.find().then(agenda => agenda.length === 0);
+            let agenda; // Definimos la variable agenda aquí
+            if (isEmpty) {
+                // Si la agenda está vacía, la creamos
+                agenda = await Agenda.create(feriados2025);
+            } else {
+                // Si no está vacía, buscamos la agenda
+                agenda = await Agenda.find();  // O puedes aplicar otro filtro si necesitas
+            }
             return res.status(200).json({
                 success:true,
                 message:'Usuario registrado con exito',
