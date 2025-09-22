@@ -18,5 +18,7 @@ export const createAgendaSchema=Joi.object({
     color:Joi.string()
     .required(),
     user:Joi.string()
-    .required()
+    .required(),
+    type:Joi.string()
+    .required(),
 })

@@ -1,12 +1,11 @@
 import crypto from 'crypto'
 import User from '../models/User.js'
 import Agenda from '../models/Agenda.js'
+import Tracking from '../models/Tracking.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-
-const controller={
-    signup:async(req,res,next)=>{
+/*signup:async(req,res,next)=>{
         try{
             const feriados2025 = [
                 {
@@ -15,6 +14,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-01-01T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Carnaval",
@@ -22,6 +22,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-03-03T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Carnaval",
@@ -29,6 +30,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-03-04T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día Nacional de la Memoria por la Verdad y la Justicia",
@@ -36,6 +38,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-03-24T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día del Veterano y de los Caídos en la Guerra de Malvinas",
@@ -43,6 +46,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-04-02T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Jueves Santo",
@@ -50,6 +54,7 @@ const controller={
                   importance: "Día no laborable",
                   date: new Date('2025-04-17T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Viernes Santo",
@@ -57,6 +62,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-04-18T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día del Trabajador",
@@ -64,6 +70,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-05-01T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día de la Revolución de Mayo",
@@ -71,6 +78,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-05-25T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Paso a la Inmortalidad del General Don Martín Miguel de Güemes",
@@ -78,6 +86,7 @@ const controller={
                   importance: "Feriado trasladable",
                   date: new Date('2025-06-16T00:00:00-03:00'), // Se traslada del 17 al 16 de junio
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Paso a la Inmortalidad del General Don Manuel Belgrano",
@@ -85,6 +94,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-06-20T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día de la Independencia",
@@ -92,6 +102,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-07-09T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Paso a la Inmortalidad del General Don José de San Martín",
@@ -99,6 +110,7 @@ const controller={
                   importance: "Feriado trasladable",
                   date: new Date('2025-08-18T00:00:00-03:00'), // Se traslada del 17 al lunes 18
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día del Respeto a la Diversidad Cultural",
@@ -106,6 +118,7 @@ const controller={
                   importance: "Feriado trasladable",
                   date: new Date('2025-10-13T00:00:00-03:00'), // Se traslada del 12 al lunes 13
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día de la Soberanía Nacional",
@@ -113,6 +126,7 @@ const controller={
                   importance: "Feriado trasladable",
                   date: new Date('2025-11-17T00:00:00-03:00'), // Se traslada del 20 al lunes 17
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día de la Inmaculada Concepción de María",
@@ -120,6 +134,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-12-08T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Navidad",
@@ -127,6 +142,7 @@ const controller={
                   importance: "Feriado inamovible",
                   date: new Date('2025-12-25T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día no laborable con fines turísticos",
@@ -134,6 +150,7 @@ const controller={
                   importance: "Día no laborable",
                   date: new Date('2025-05-02T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día no laborable con fines turísticos",
@@ -141,6 +158,7 @@ const controller={
                   importance: "Día no laborable",
                   date: new Date('2025-08-15T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
                 {
                   name: "Día no laborable con fines turísticos",
@@ -148,6 +166,7 @@ const controller={
                   importance: "Día no laborable",
                   date: new Date('2025-11-21T00:00:00-03:00'),
                   color: "bg-indigo-500",
+                  type:"feriado"
                 },
             ];                    
             req.body.verified_code=crypto.randomBytes(10).toString('hex')
@@ -183,8 +202,10 @@ const controller={
                 success:false,
                 message:'No se pudo crear el usuario'
             })
-        }
-    },
+        }},*/ 
+        
+const controller={
+    
     signin:async(req,res,next)=>{
         try{
             const user=await User.findOneAndUpdate(
@@ -277,6 +298,27 @@ const controller={
             res.status(500).json({
                 success:false,
                 message:'No se pudo crear el usuario'
+            })
+        }
+    },
+    tracking:async(req,res,next)=>{
+        try{
+            const tracking= await Tracking.create(req.body)
+            console.log(req.body)
+            return res.status(200).json({
+                success:true,
+                message:'Tracking registrado con exito',
+                response:{
+                    tracking:{
+                        meassure:tracking.meassure,
+                    }
+                }
+            })
+        }catch(error)
+        {
+            res.status(500).json({
+                success:false,
+                message:'No se pudo crear el tracking'
             })
         }
     }
