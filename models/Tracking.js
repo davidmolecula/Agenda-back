@@ -5,7 +5,9 @@ let collection='Tracking';
 let schema=new Schema({
     user:{type: Types.ObjectId,ref:'users'},
     date:{type:Object,required:true},
-    meassure: Number,
+    task:{type:String},
+    meassure: {type:Number},
+    fixed: Boolean,
     type:{type:String,required:true}
 },{
     timestamps:true

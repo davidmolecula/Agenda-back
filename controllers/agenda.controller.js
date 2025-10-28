@@ -109,8 +109,6 @@ const controller = {
     },
     getTracking:async(req,res)=>{
         const userId = req.body.id;
-        const date=req.body.date;
-
         try{
             const tracking=await Tracking.find({user:userId})
             if(tracking.length>0)

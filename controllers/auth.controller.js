@@ -5,7 +5,10 @@ import Tracking from '../models/Tracking.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-/*signup:async(req,res,next)=>{
+/**/ 
+        
+const controller={
+    signup:async(req,res,next)=>{
         try{
             const feriados2025 = [
                 {
@@ -202,10 +205,7 @@ import jwt from 'jsonwebtoken'
                 success:false,
                 message:'No se pudo crear el usuario'
             })
-        }},*/ 
-        
-const controller={
-    
+        }},
     signin:async(req,res,next)=>{
         try{
             const user=await User.findOneAndUpdate(
