@@ -7,7 +7,10 @@ let schema=new Schema({
     date:{type:Object,required:true},
     task:{type:String},
     meassure: {type:Number},
-    fixed: Boolean,
+    fixed: {type: Boolean},
+    completed:{type:Boolean},
+    bg:{type: String},
+    checked:{type:String},
     type:{type:String,required:true}
 },{
     timestamps:true

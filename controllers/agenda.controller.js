@@ -128,7 +128,42 @@ const controller = {
                 message:'Error al obtener el tracking'
             })
         }
-
+    },
+    updateTracking:async(req,res)=>{
+        const filter={task: req.body.filter}
+        const completed=req.body.fields.completed
+        const bg=req.body.fields.bg
+        const checked=req.body.fields.checked
+        try{
+            const tracking=await Tracking.findOneAndUpdate(filter, {
+                $set:
+                {
+                completed,
+                bg,
+                checked
+                }}, {
+            new: true
+            })
+            const allTrackings=await Tracking.find()
+            console.log('trackings', tracking)
+            console.log('alltrackings', allTrackings)
+            if(tracking)
+            {
+                return res.status(200).json({
+                    success:true,
+                    tracking:allTrackings
+                })
+            }
+            return res.status(404).json({
+                success:false,
+                message:'No se encontro tracking'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al obtener el tracking'
+            })
+        }
     }
 }
 
