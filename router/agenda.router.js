@@ -16,5 +16,5 @@ router.post('/delete', deleteAgenda)
 router.post('/send-email', sendEmail )
 router.post('/tracking',getTracking)
 router.post('/tracking-update', updateTracking)
-
+router.post('/send-email', sendEmail)
 export default router

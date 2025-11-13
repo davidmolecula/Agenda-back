@@ -1,32 +1,16 @@
-import nodemailer from 'nodemailer'
+import {MailerooClient, EmailAddress, Attachment} from "maileroo-sdk";
 
-const emailHelper = async (to, subject, text) => {
-  // Create a transporter
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS
-    },
-  });
+const client = new MailerooClient(process.env.SENDING_KEY);
 
-  // Set up email options
-  let mailOptions = {
-    from: process.env.SMPT_USER,
-    to: to,
-    subject: subject,
-    text: text,
-  };
+export default async function sendMail(){
+const referenceId = await client.sendBasicEmail({
+    from: new EmailAddress("noreply@ec18bf2832f7a52e.maileroo.org", "Sender Name"),
+    to: [new EmailAddress("davidmolecula@gmail.com", "Recipient Name")],
+    subject: "Hello from Maileroo!",
+    html: "<h1>Hello World!</h1><p>This is a test email.</p>",
+    plain: "Hello World! This is a test email."
+});
 
-  // Send the email
-  try {
-    let info = await transporter.sendMail(mailOptions);
-    console.log("Email sent: " + info.response);
-    return info;
-  } catch (error) {
-    console.error("Error sending email:", error);
-    throw error;
-  }
-};
-
-export default emailHelper
+console.log("Email sent with reference ID:", referenceId);
+return referenceId
+}

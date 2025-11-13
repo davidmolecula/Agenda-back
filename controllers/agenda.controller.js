@@ -1,7 +1,7 @@
 import Agenda from '../models/Agenda.js'
 import emailHelper from '../helpers/email.helper.js'
 import Tracking from '../models/Tracking.js'
-
+import sendMail from '../helpers/email.helper.js'
 
 const controller = {
     getAgenda: async(req,res) => {
@@ -60,8 +60,6 @@ const controller = {
     },
     getFeriados: async(req,res) => {
         const feriado = "feriado"
-        console.log(feriado)
-
         try{
             const feriados=await Agenda.find({type: feriado })
             if(feriados.length>0)
@@ -83,15 +81,13 @@ const controller = {
         }
     },
     sendEmail:async(req,res)=>{
-        const { to, subject, text } = req.body;
-
+        const { to, subject, html } = req.body;
         try {
-            let info = await emailHelper(to, subject, text);
-            res.status(200).send(`Email sent: ${info.response}`);
+        const result = await sendMail({ to, subject, html });
+        res.json({ success: true, result });
         } catch (error) {
-            res.status(500).send("Error sending email");
-        }
-
+    res.status(500).json({ success: false, error: error.message });
+    }
     },
     createTracking:async(req,res)=>{
         try{
@@ -145,8 +141,6 @@ const controller = {
             new: true
             })
             const allTrackings=await Tracking.find()
-            console.log('trackings', tracking)
-            console.log('alltrackings', allTrackings)
             if(tracking)
             {
                 return res.status(200).json({
