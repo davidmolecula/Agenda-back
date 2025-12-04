@@ -1,6 +1,7 @@
 import Agenda from '../models/Agenda.js'
 import emailHelper from '../helpers/email.helper.js'
 import Tracking from '../models/Tracking.js'
+import Task from '../models/Task.js'
 import sendMail from '../helpers/email.helper.js'
 
 const controller = {
@@ -158,7 +159,79 @@ const controller = {
                 message:'Error al obtener el tracking'
             })
         }
-    }
+    },
+    createTask:async(req,res)=>{
+        try{
+            const newTask=await Task.create(req.body)
+            return res.status(201).json({
+                success:true,
+                message:'Tareada creada'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al crear la tarea'
+            })
+        }
+    },
+    getTask:async(req,res)=>{
+        const userId = req.body.id;
+        try{
+            const task=await Task.find({user:userId})
+            if(task.length>0)
+            {
+                return res.status(200).json({
+                    success:true,
+                    task:task
+                })
+            }
+            return res.status(404).json({
+                success:false,
+                message:'No se encontro la tarea'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al obtener la tarea'
+            })
+        }
+    },
+    updateTask:async(req,res)=>{
+        const filter={task: req.body.filter}
+        const completed=req.body.fields.completed
+        const bg=req.body.fields.bg
+        const checked=req.body.fields.checked
+        console.log("updated")
+        try{
+            const task=await Task.findOneAndUpdate(filter, {
+                $set:
+                {
+                completed,
+                bg,
+                checked
+                }}, {
+            new: true
+            })
+            const allTasks=await Task.find()
+            console.log(allTasks)
+            if(task)
+            {
+                return res.status(200).json({
+                    success:true,
+                    task:allTasks
+                })
+            }
+            return res.status(404).json({
+                success:false,
+                message:'No se encontro tarea'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al obtener la tarea'
+            })
+        }
+    },
 }
 
 export default controller

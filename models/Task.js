@@ -1,18 +1,20 @@
 import {Schema, model,Types} from 'mongoose';
 
-let collection='Tracking';
+let collection='Task';
 
 let schema=new Schema({
     user:{type: Types.ObjectId,ref:'users'},
     date:{type:Object,required:true},
     task:{type:String},
-    tracking:{type:String},
-    meassure: {type:Number},
+    fixed: {type: Boolean},
+    completed:{type:Boolean},
+    bg:{type: String},
+    checked:{type:String},
     type:{type:String,required:true}
 },{
     timestamps:true
 })
 
-let Tracking=model(collection,schema)
+let Task=model(collection,schema)
 
-export default Tracking
+export default Task
