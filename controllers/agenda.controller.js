@@ -1,5 +1,4 @@
 import Agenda from '../models/Agenda.js'
-import emailHelper from '../helpers/email.helper.js'
 import Tracking from '../models/Tracking.js'
 import Task from '../models/Task.js'
 import sendMail from '../helpers/email.helper.js'
@@ -42,6 +41,36 @@ const controller = {
             })
         }
         
+    },
+    updateAgenda:async(req,res)=>{
+        const filter={_id:req.body.id}
+        const name=req.body.name
+        try{
+            const agenda=await Agenda.findOneAndUpdate(filter, {
+                $set:
+                {
+                name,
+                }}, {
+            new: true
+            })
+            const allAgenda=await Agenda.find()
+            if(agenda)
+            {
+                return res.status(200).json({
+                    success:true,
+                    tracking:allAgenda
+                })
+            }
+            return res.status(404).json({
+                success:false,
+                message:'No se encontro agenda'
+            })
+        }catch(error){
+            return res.status(500).json({
+                success:false,
+                message:'Error al obtener la agenda'
+            })
+        }
     },
     deleteAgenda: async(req,res)=>{
         try{
