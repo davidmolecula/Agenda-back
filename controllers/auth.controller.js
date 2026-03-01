@@ -223,7 +223,7 @@ const controller = {
           photo: user.photo,
         },
         process.env.SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "8h" }
       );
       user.password = null;
       return res.status(200).json({

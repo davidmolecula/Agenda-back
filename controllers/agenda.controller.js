@@ -5,10 +5,10 @@ import sendMail from '../helpers/email.helper.js'
 
 const controller = {
     getAgenda: async(req,res) => {
-        const userId = req.body.id;
+        const userId = req.user.id;
         try{
             const agenda=await Agenda.find({user: userId })
-
+            console.log(agenda)
             if(agenda.length>0)
             {
                 return res.status(200).json({
@@ -40,7 +40,6 @@ const controller = {
                 message:'Error al crear la agenda'
             })
         }
-        
     },
     updateAgenda:async(req,res)=>{
         const filter={_id:req.body.id}

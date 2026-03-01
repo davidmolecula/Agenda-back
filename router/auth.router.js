@@ -10,15 +10,14 @@ const router=express.Router()
 const { signup, signin, signout,token,agenda, tracking, task }=authController
 import { validator } from '../middlewares/validator.js'
 import { createAgendaSchema } from "../schema/agenda.schema.js";
-
-
+import { actionAgendaMiddleware } from "../middlewares/auth/actionAgenda.middleware.js";
 
 router.post('/signup', accountExistSignup, validator(createUserSchema),signup)
 router.post('/signin', accountExistSignin, accountHasBeenVerified,passwordIsOk, signin)
-router.post('/signout', signout)
-router.post('/token', passport.authenticate('jwt',{session:false}),token)
-router.post('/agenda', validator(createAgendaSchema), agenda)
-router.post('/tracking', tracking)
-router.post('/task', task)
+router.post('/signout', actionAgendaMiddleware, signout)
+router.post('/token', actionAgendaMiddleware, passport.authenticate('jwt',{session:false}), token)
+router.post('/agenda',actionAgendaMiddleware, validator(createAgendaSchema), agenda)
+router.post('/tracking',actionAgendaMiddleware, tracking)
+router.post('/task', actionAgendaMiddleware, task)
 
 export default router
